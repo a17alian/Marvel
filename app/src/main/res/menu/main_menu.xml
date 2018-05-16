@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/byName"
+        android:title="Sort By Title" />
+    <item android:id="@+id/byDirector"
+        android:title="Sort By Director" />
+    <item android:id="@+id/byYear"
+        android:title="Sort By Year" />
+
+    <item android:id="@+id/about"
+        android:title="About" />
+</menu>
