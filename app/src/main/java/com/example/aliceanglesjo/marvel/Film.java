@@ -4,7 +4,7 @@ package com.example.aliceanglesjo.marvel;
  * Created by aliceanglesjo on 2018-04-20.
  */
 
-public class Mountain {
+public class Film {
     private String ID;
     private String name;
     private String status;
@@ -18,7 +18,7 @@ public class Mountain {
 
 
     // Constructor
-    public Mountain(String inName , String inStatus, String inYear, String inImdb, String inRuntime, String inDirector, String inStoryline, String inImg){
+    public Film(String inName , String inStatus, String inYear, String inImdb, String inRuntime, String inDirector, String inStoryline, String inImg){
         name = inName;
         status = inStatus;
         year = inYear;
@@ -30,7 +30,7 @@ public class Mountain {
 
     }
 
-    public Mountain(String inName, String inDirector, String inYear, String inStory, String inImage, String inImdb){
+    public Film(String inName, String inDirector, String inYear, String inStory, String inImage, String inImdb){
         this.name = inName;
         director = inDirector;
         year = inYear;

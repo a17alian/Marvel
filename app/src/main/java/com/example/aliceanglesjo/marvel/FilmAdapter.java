@@ -12,11 +12,11 @@ import java.util.List;
  * Created by aliceanglesjo on 2018-05-08.
  */
 
-public class MountainAdapter extends RecyclerView.Adapter<MountainAdapter.ViewHolder>{
-    public List<Mountain> mDataset;
+public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder>{
+    public List<Film> mDataset;
 
     public interface OnItemClickListener {
-        void onItemClick(Mountain item);
+        void onItemClick(Film item);
     }
     private final OnItemClickListener listener;
 
@@ -33,15 +33,15 @@ public class MountainAdapter extends RecyclerView.Adapter<MountainAdapter.ViewHo
         }
     }
 
-    public MountainAdapter(List<Mountain> myDataset, OnItemClickListener inListener) {
+    public FilmAdapter(List<Film> myDataset, OnItemClickListener inListener) {
         mDataset = myDataset;
         listener = inListener;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public MountainAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
+    public FilmAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                     int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.my_textview, parent, false);

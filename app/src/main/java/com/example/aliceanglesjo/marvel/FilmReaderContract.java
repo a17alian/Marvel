@@ -6,13 +6,13 @@ import android.provider.BaseColumns;
  * Created by marcus on 2018-04-25.
  */
 
-public class MountainReaderContract {
+public class FilmReaderContract {
     // This class should contain your database schema.
     // See: https://developer.android.com/training/data-storage/sqlite.html#DefineContract
 
-    private MountainReaderContract() {}
+    private FilmReaderContract() {}
 
-    // Inner class that defines the Mountain table contents
+    // Inner class that defines the Film table contents
     public static class MountainEntry implements BaseColumns {
         // TODO:
         public static final String TABLE_NAME = "Movies";

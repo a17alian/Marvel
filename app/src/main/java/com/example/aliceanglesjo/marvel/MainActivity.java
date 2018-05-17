@@ -9,7 +9,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,16 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import com.example.aliceanglesjo.marvel.Details;
-import com.example.aliceanglesjo.marvel.Mountain;
-import com.example.aliceanglesjo.marvel.MountainAdapter;
-import com.example.aliceanglesjo.marvel.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,10 +30,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 //import java.time.Year;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import static com.example.aliceanglesjo.marvel.R.id.story;
 
 
 /** TODO
@@ -59,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
 
     private ArrayAdapter adapter;
-    private List<Mountain> listData = new ArrayList<>();
+    private List<Film> listData = new ArrayList<>();
 
-    MountainReaderDbHelper alice;
+    FilmReaderDbHelper alice;
     boolean isName = false;
     boolean isDirector = false;
     boolean isYear = false;
@@ -89,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new MountainAdapter(listData, new MountainAdapter.OnItemClickListener() {
+        mAdapter = new FilmAdapter(listData, new FilmAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(Mountain item) {
+            public void onItemClick(Film item) {
               Intent details = new Intent(getApplicationContext(),Details.class);
                 details.putExtra("heading", item.heading());
                 details.putExtra("sub", item.subtile());
@@ -105,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         // DATABASE
-        alice = new MountainReaderDbHelper(getApplicationContext()) {
+        alice = new FilmReaderDbHelper(getApplicationContext()) {
         };
 
     }
@@ -114,26 +101,26 @@ public class MainActivity extends AppCompatActivity {
        listData.clear();
         SQLiteDatabase dbRead = alice.getReadableDatabase();
         String[] projection = {
-                MountainReaderContract.MountainEntry.COLUMN_NAME_NAME,
-                MountainReaderContract.MountainEntry.COLUMN_NAME_YEAR,
-                MountainReaderContract.MountainEntry.COLUMN_NAME_DIRECTOR,
-                MountainReaderContract.MountainEntry.COLUMN_NAME_STORY,
-                MountainReaderContract.MountainEntry.COLUMN_NAME_IMDB,
-                MountainReaderContract.MountainEntry.COLUMN_NAME_IMG_URL
+                FilmReaderContract.MountainEntry.COLUMN_NAME_NAME,
+                FilmReaderContract.MountainEntry.COLUMN_NAME_YEAR,
+                FilmReaderContract.MountainEntry.COLUMN_NAME_DIRECTOR,
+                FilmReaderContract.MountainEntry.COLUMN_NAME_STORY,
+                FilmReaderContract.MountainEntry.COLUMN_NAME_IMDB,
+                FilmReaderContract.MountainEntry.COLUMN_NAME_IMG_URL
         };
 
         String sortOrder =
-                MountainReaderContract.MountainEntry.COLUMN_NAME_NAME + " DESC ";
+                FilmReaderContract.MountainEntry.COLUMN_NAME_NAME + " DESC ";
         if(isDirector){
-            sortOrder = MountainReaderContract.MountainEntry.COLUMN_NAME_DIRECTOR + " ASC ";
+            sortOrder = FilmReaderContract.MountainEntry.COLUMN_NAME_DIRECTOR + " ASC ";
         } else if(isName){
-            sortOrder = MountainReaderContract.MountainEntry.COLUMN_NAME_NAME + " ASC ";
+            sortOrder = FilmReaderContract.MountainEntry.COLUMN_NAME_NAME + " ASC ";
         } else if(isYear){
-            sortOrder = MountainReaderContract.MountainEntry.COLUMN_NAME_YEAR + " ASC ";
+            sortOrder = FilmReaderContract.MountainEntry.COLUMN_NAME_YEAR + " ASC ";
         }
 
         Cursor cursor = dbRead.query(
-                MountainReaderContract.MountainEntry.TABLE_NAME,   // The table to query
+                FilmReaderContract.MountainEntry.TABLE_NAME,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
                 null,              // The columns for the WHERE clause
                 null,          // The values for the WHERE clause
@@ -142,14 +129,14 @@ public class MainActivity extends AppCompatActivity {
                 sortOrder               // The sort order
         );
         while (cursor.moveToNext()) {
-            String mName = cursor.getString(cursor.getColumnIndexOrThrow(MountainReaderContract.MountainEntry.COLUMN_NAME_NAME));
-            String mYear = cursor.getString(cursor.getColumnIndexOrThrow(MountainReaderContract.MountainEntry.COLUMN_NAME_YEAR));
-            String mDirector = cursor.getString(cursor.getColumnIndexOrThrow(MountainReaderContract.MountainEntry.COLUMN_NAME_DIRECTOR));
-            String mStory = cursor.getString(cursor.getColumnIndexOrThrow(MountainReaderContract.MountainEntry.COLUMN_NAME_STORY));
-            String mImage = cursor.getString(cursor.getColumnIndexOrThrow(MountainReaderContract.MountainEntry.COLUMN_NAME_IMG_URL));
-            String mImdb = cursor.getString(cursor.getColumnIndexOrThrow(MountainReaderContract.MountainEntry.COLUMN_NAME_IMDB));
+            String mName = cursor.getString(cursor.getColumnIndexOrThrow(FilmReaderContract.MountainEntry.COLUMN_NAME_NAME));
+            String mYear = cursor.getString(cursor.getColumnIndexOrThrow(FilmReaderContract.MountainEntry.COLUMN_NAME_YEAR));
+            String mDirector = cursor.getString(cursor.getColumnIndexOrThrow(FilmReaderContract.MountainEntry.COLUMN_NAME_DIRECTOR));
+            String mStory = cursor.getString(cursor.getColumnIndexOrThrow(FilmReaderContract.MountainEntry.COLUMN_NAME_STORY));
+            String mImage = cursor.getString(cursor.getColumnIndexOrThrow(FilmReaderContract.MountainEntry.COLUMN_NAME_IMG_URL));
+            String mImdb = cursor.getString(cursor.getColumnIndexOrThrow(FilmReaderContract.MountainEntry.COLUMN_NAME_IMDB));
 
-            Mountain mfilm = new Mountain(mName, mDirector, mYear, mStory, mImage, mImdb);
+            Film mfilm = new Film(mName, mDirector, mYear, mStory, mImage, mImdb);
 
            // Log.d("story", mStory);
             listData.add(mfilm);
@@ -287,22 +274,22 @@ public class MainActivity extends AppCompatActivity {
                    // Log.d("story", storyline.toString());
 
                     ContentValues values = new ContentValues();
-                    values.put(MountainReaderContract.MountainEntry.COLUMN_NAME_NAME, name);
-                    values.put(MountainReaderContract.MountainEntry.COLUMN_NAME_YEAR, year);
-                    values.put(MountainReaderContract.MountainEntry.COLUMN_NAME_DIRECTOR, director);
-                    values.put(MountainReaderContract.MountainEntry.COLUMN_NAME_STORY, storyline);
-                    values.put(MountainReaderContract.MountainEntry.COLUMN_NAME_IMG_URL, imgUrl);
-                    values.put(MountainReaderContract.MountainEntry.COLUMN_NAME_IMDB, imdb);
+                    values.put(FilmReaderContract.MountainEntry.COLUMN_NAME_NAME, name);
+                    values.put(FilmReaderContract.MountainEntry.COLUMN_NAME_YEAR, year);
+                    values.put(FilmReaderContract.MountainEntry.COLUMN_NAME_DIRECTOR, director);
+                    values.put(FilmReaderContract.MountainEntry.COLUMN_NAME_STORY, storyline);
+                    values.put(FilmReaderContract.MountainEntry.COLUMN_NAME_IMG_URL, imgUrl);
+                    values.put(FilmReaderContract.MountainEntry.COLUMN_NAME_IMDB, imdb);
 
-                    dbWrite.insertWithOnConflict(MountainReaderContract.MountainEntry.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+                    dbWrite.insertWithOnConflict(FilmReaderContract.MountainEntry.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
 
-                    Mountain m = new Mountain(name, status , year, imdb, runtime, director, storyline ,imgUrl);
+                    Film m = new Film(name, status , year, imdb, runtime, director, storyline ,imgUrl);
 
                     listData.add(m);
 
-                    mRecyclerView.setAdapter(new MountainAdapter(listData, new MountainAdapter.OnItemClickListener() {
+                    mRecyclerView.setAdapter(new FilmAdapter(listData, new FilmAdapter.OnItemClickListener() {
                         @Override
-                        public void onItemClick(Mountain item) {
+                        public void onItemClick(Film item) {
                             Intent details = new Intent(getApplicationContext(),Details.class);
                             details.putExtra("heading", item.heading());
                             details.putExtra("sub", item.subtile());
