@@ -7,6 +7,4 @@
     <item android:id="@+id/byYear"
         android:title="Sort By Year" />
 
-    <item android:id="@+id/about"
-        android:title="About" />
 </menu>

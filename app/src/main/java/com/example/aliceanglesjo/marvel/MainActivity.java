@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -69,6 +72,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         new FetchData().execute();
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+
+       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "This is an app about the Marvel Cinematic Universe. Created by Alice Anglesjö.", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+    /*  RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+        mRecyclerView.setLayoutManager(mLayoutManager); */
 
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
@@ -172,8 +187,6 @@ public class MainActivity extends AppCompatActivity {
                 isYear = true;
                 fetchDb();
                 return true;
-            case R.id.about:
-                Toast.makeText(getApplicationContext(), "This is an app about the Marvel Cinematic Universe" + '\n' + "Created by Alice Anglesjö",Toast.LENGTH_LONG).show();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -193,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 // Construct the URL for the Internet service
-                URL url = new URL("https://api.myjson.com/bins/17xqza");
+                URL url = new URL("https://api.myjson.com/bins/hk1xq");
 
                 // Create the request to the PHP-service, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
