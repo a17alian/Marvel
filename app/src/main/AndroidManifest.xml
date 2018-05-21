@@ -30,15 +30,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.aliceanglesjo.marvel.Details" />
         </activity>
-        <activity
-            android:name=".StartActivity"
-            android:label="@string/title_activity_start"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.aliceanglesjo.marvel.MainActivity" />
-        </activity>
+
     </application>
 
 </manifest>

@@ -64,13 +64,11 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "This is an app about the Marvel Cinematic Universe. Created by Alice Anglesjö.", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "This is an app for people who want to know about the Marvel Cinematic Universe.", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
 
-    /*  RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
-        mRecyclerView.setLayoutManager(mLayoutManager); */
 
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
