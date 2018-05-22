@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "This is an app for people who want to know about the Marvel Cinematic Universe.", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "This is an app for people who want to know about the Marvel Cinematic Universe. Created by Alice Anglesjö.", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -190,9 +190,9 @@ public class MainActivity extends AppCompatActivity {
             String jsonStr = null;
 
             try {
-                // Construct the URL for the Internet service
-                URL url = new URL("https://api.myjson.com/bins/hk1xq");
+                // URL url = new URL("https://api.myjson.com/bins/hk1xq");
 
+                URL url = new URL("http://wwwlab.iit.his.se/brom/kurser/mobilprog/dbservice/admin/getdataasjson.php?type=a17alian");
                 // Create the request to the PHP-service, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
@@ -243,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String o) {
 
             super.onPostExecute(o);
-           // Log.d("alicehej", "data" + o);
+           Log.d("alicehej", "data" + o);
 
             try {
                 mRecyclerView.setAdapter(null);
@@ -260,16 +260,18 @@ public class MainActivity extends AppCompatActivity {
 
                     String ID = film.getString("ID");
                     String name = film.getString("name");
-                    String status = film.getString("status");
-                    String year = film.getString("year");
-                    String imdb = film.getString("imdb");
-                    String runtime = film.getString("runtime");
-                    String director = film.getString("director");
-                    String storyline = film.getString("storyline");
+                   // String status = film.getString("status");
+                    String year = film.getString("location");
+                    String imdb = film.getString("category");
+                   // String runtime = film.getString("runtime");
+                    String director = film.getString("company");
+
 
                     JSONObject aData = new JSONObject(film.getString("auxdata"));
+                    String storyline = aData.getString("Storyline");
+
                     String imgUrl = aData.getString("img");
-                   // Log.d("story", storyline.toString());
+                   //Log.d("aux", imgUrl.toString());
 
                     ContentValues values = new ContentValues();
                     values.put(FilmReaderContract.MountainEntry.COLUMN_NAME_NAME, name);
@@ -281,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
 
                     dbWrite.insertWithOnConflict(FilmReaderContract.MountainEntry.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
 
-                    Film m = new Film(name, status , year, imdb, runtime, director, storyline ,imgUrl);
+                    Film m = new Film(name, "" , year, imdb, "", director, storyline ,imgUrl);
 
                     listData.add(m);
 
